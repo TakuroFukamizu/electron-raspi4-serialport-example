@@ -14,6 +14,10 @@ class IpcHandler extends EventEmitter {
     set mainWindow(window: BrowserWindow) {
         this.window = window;
     }
+
+    sendTagScanedMessage(tagId: string) {
+        this.mainWindow.webContents.send('tags', tagId);
+    }
 }
 const ipcHandler = new IpcHandler();
 export default ipcHandler;

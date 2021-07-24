@@ -1,7 +1,8 @@
 import path from 'path';
 import { app, BrowserWindow, globalShortcut } from 'electron';
 import { machineIdSync } from "node-machine-id";
-import ipcHandler from './ipcHandler';
+import ipcHandler from './handler/ipcHandler';
+import rfid from './interface/devices/rfid';
 
 const original: boolean = true;
 const uuid = machineIdSync(original);
@@ -47,6 +48,13 @@ const createWindow = () => {
 app.whenReady().then(async () => {
     // BrowserWindow インスタンスを作成
     createWindow();
+
+    // RFID読み取り時にはrendererに情報を送る
+    rfid.on('tag', (uid: string) => {
+        ipcHandler.sendTagScanedMessage(uid);
+    })
+    // RFIDの読み取りスタート
+    rfid.init();
 });
 
 // すべてのウィンドウが閉じられたらアプリを終了する
