@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "dist/main.js",
   "scripts": {
-    "start": "run-s clean build serve",
+    "rebuild": "electron-rebuild -f -a armv8",
+    "start": "run-s build serve",
     "clean": "rimraf dist",
     "build": "cross-env NODE_ENV=\"development\" webpack --progress",
     "serve": "electron ."
@@ -33,6 +34,7 @@
   "dependencies": {
     "bootstrap-vue": "^2.21.2",
     "dotenv": "^10.0.0",
+    "electron-rebuild": "^2.3.5",
     "pn532": "^1.0.0",
     "serialport": "^9.2.0",
     "vue": "^2.6.14",
